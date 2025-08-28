@@ -4,10 +4,10 @@ Upload a melody → get the interval profile (+3M, −2m, …) and contour.
 A tiny toolkit and web app for extracting melodic interval profiles and melodic contours from MIDI/MusicXML (and optionally from audio via transcription).
 
 ## Development Status
-[![Status: alpha](https://img.shields.io/badge/status-alpha-orange)](#)
-[![Stability: experimental](https://img.shields.io/badge/stability-experimental-red)](#)
+[![Status: beta](https://img.shields.io/badge/status-beta-blue)](#)
+[![Stability: stable](https://img.shields.io/badge/stability-stable-green)](#)
 
-This project is in its early development stage. Expect rapid, potentially breaking changes and large commits until v0.1.0.
+This project is currently in beta. The core functionality (interval profile + contour extraction) is stable and ready for practical use, but new features will continue to be added before reaching v1.0.0.
 
 ## Why
 

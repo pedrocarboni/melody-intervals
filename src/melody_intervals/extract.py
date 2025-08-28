@@ -84,14 +84,23 @@ def main():
     )
     p.add_argument("input", help="File: .mid/.midi/.musicxml/.xml")
     p.add_argument("--json", action="store_true", help="Enables output in JSON format")
+    p.add_argument("--out", type=str, help="Save output to file")
     args = p.parse_args()
 
     res = extract_intervals(args.input)
     if args.json:
-        print(json.dumps(res, ensure_ascii=False, indent=2))
+        output = json.dumps(res, ensure_ascii=False, indent=2)
     else:
-        print(f"Interval profile: {', '.join(res['sequence'])}")
-        print(f"Contour: {', '.join(res['contour'])}")
+        output = (
+            f"Interval profile: {', '.join(res['sequence'])}\n"
+            f"Contour: {', '.join(res['contour'])}"
+        )
+
+    if args.out:
+        with open(args.out, "w", encoding="utf-8") as f:
+            f.write(output)
+    else:
+        print(output)
 
 if __name__ == "__main__":
     main()

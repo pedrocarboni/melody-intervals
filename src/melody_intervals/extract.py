@@ -83,10 +83,14 @@ def main():
         description="Extrai perfil de intervalos dirigidos (+nQ/−nQ/→) e contorno (↑/↓/→) de MIDI/MusicXML."
     )
     p.add_argument("input", help="Arquivo .mid/.midi/.musicxml/.xml")
+    p.add_argument("--json", action="store_true", help="Enables output in JSON format")
     args = p.parse_args()
 
     res = extract_intervals(args.input)
-    print(res)
+    if args.json:
+        print(json.dumps(res, ensure_ascii=False, indent=2))
+    else:
+        print(res)
 
 if __name__ == "__main__":
     main()

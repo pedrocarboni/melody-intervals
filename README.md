@@ -4,10 +4,10 @@ Upload a melody → get the interval profile (+3M, −2m, …) and contour.
 A tiny toolkit and web app for extracting melodic interval profiles and melodic contours from MIDI/MusicXML (and optionally from audio via transcription).
 
 ## Development Status
-[![Status: alpha](https://img.shields.io/badge/status-alpha-orange)](#)
-[![Stability: experimental](https://img.shields.io/badge/stability-experimental-red)](#)
+[![Status: beta](https://img.shields.io/badge/status-beta-blue)](#)
+[![Stability: stable](https://img.shields.io/badge/stability-stable-green)](#)
 
-This project is in its early development stage. Expect rapid, potentially breaking changes and large commits until v0.1.0.
+This project is currently in beta. The core functionality (interval profile + contour extraction) is stable and ready for practical use, but new features will continue to be added before reaching v1.0.0.
 
 ## Why
 
@@ -17,73 +17,47 @@ Analyzing melodies shouldn’t require heavy tooling. This project gives musicia
 ## Features
 
 - Interval profile with direction (e.g., `+3M`, `−2m`, `→`, etc.)
-- Melodic contour (up / down / same)
+- Melodic contour (↑, ↓, →)
 
 ## Inputs
 
 - MIDI (`.mid`, `.midi`)
 - MusicXML (`.musicxml`, `.xml`)
 
-## Quick Start (Web App)
-
-> [!WARNING]
-> Not functional yet. Under active development; commands below are placeholders for v0.1.0.
+## Usage
 
 ```bash
-git clone https://github.com/pedrocarboni/melody-intervals.git
-cd melody-intervals
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-Open the local URL, drop your MIDI/MusicXML, and you’ll see:
-- the interval profile string,
-- a list of intervals with direction,
-- charts for interval usage and pitch contour.
-
-## Library Usage (Python)
-
-> [!WARNING]
-> Draft library interface. WIP.
-
-```python
-from melody_intervals import extract_intervals
-
-profile = extract_intervals("examples/melody.musicxml")
-print(profile.sequence)         # ['+2M', '+2M', '−3m', '→', ...]
-print(profile.contour)          # ['↑','↑','↓','→', ...]
-print(profile.stats.ambitus)    # e.g., 'P8'
-```
-
-## CLI
-
-> [!WARNING]
-> CLI not implemented yet. The command below is illustrative and will not work until v0.1.0.
-
-```bash
-python -m melody_intervals examples/melody.mid --out intervals.json
+python extract.py examples/melody.mid
 # Options:
-#   --format json|csv
-#   --contour-only
-#   --stats
+#   --json       Output in JSON format
+#   --out FILE   Save output to file
 ```
 
 ## Example Output
 
+Plain Text
 ```
 Interval profile: +2M, +2M, −3m, →, +2M, −2m
 Contour: ↑, ↑, ↓, →, ↑, ↓
 ```
+JSON
+```
+{
+  "sequence": ["+2M", "+2M", "−3m", "→", "+2M", "−2m"],
+  "contour":  ["↑", "↑", "↓", "→", "↑", "↓"]
+}
+```
 
 ## How it works
 
-- Parses MIDI/MusicXML (via `music21`) and walks note-to-note.
+- Parses MIDI/MusicXML (via `music21`) and walks note-to-note skipping rests.
 - Computes directed intervals and labels them (e.g., m2/M3/P4/A4…).
-- Derives contour and basic stats.
-- (Optional) Transcribes audio → MIDI using a chosen backend (off by default).
+
 
 ## Roadmap
 
+- Basic stats (--stats)
+- Ambitus (melodic range, min/max span)
 - Web UI (Streamlit) for non-technical users
 - Counts & stats (step vs. leap, melodic ambitus, highest/lowest point)
 - Simple charts (bar chart for interval frequency; line plot for pitch contour)

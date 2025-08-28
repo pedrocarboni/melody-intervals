@@ -1,7 +1,7 @@
 # melody-intervals
 
 Upload a melody → get the interval profile (+3M, −2m, …) and contour.  
-A tiny toolkit and web app for extracting melodic interval profiles and melodic contours from MIDI/MusicXML (and optionally from audio via transcription).
+A tiny toolkit for extracting melodic interval profiles and melodic contours from MIDI/MusicXML (and in the future from audio via transcription).
 
 ## Development Status
 [![Status: beta](https://img.shields.io/badge/status-beta-blue)](#)
@@ -31,6 +31,7 @@ python extract.py examples/melody.mid
 # Options:
 #   --json       Output in JSON format
 #   --out FILE   Save output to file
+#   --stats      Show stats, such as ambitus, steps/leaps and interval counts
 ```
 
 ## Example Output
@@ -61,6 +62,7 @@ JSON
 - Export to CSV
 - Batch processing
 - Key/scale-aware normalization
+- Export melody hash / unique identifier (for comparisons & deduplication)
 
 ## Contributing
 

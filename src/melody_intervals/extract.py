@@ -90,7 +90,8 @@ def main():
     if args.json:
         print(json.dumps(res, ensure_ascii=False, indent=2))
     else:
-        print(res)
+        print(f"Interval profile: {', '.join(res['sequence'])}")
+        print(f"Contour: {', '.join(res['contour'])}")
 
 if __name__ == "__main__":
     main()

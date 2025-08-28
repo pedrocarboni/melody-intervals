@@ -56,12 +56,9 @@ JSON
 
 ## Roadmap
 
-- Basic stats (--stats)
-- Ambitus (melodic range, min/max span)
 - Web UI (Streamlit) for non-technical users
-- Counts & stats (step vs. leap, melodic ambitus, highest/lowest point)
 - Simple charts (bar chart for interval frequency; line plot for pitch contour)
-- Export to JSON/CSV
+- Export to CSV
 - Batch processing
 - Key/scale-aware normalization
 
@@ -75,4 +72,4 @@ MIT
 
 ## Acknowledgments
 
-Built with ❤️ on top of music21. Thanks to the community around melodic analysis and interval/contour research for inspiration.
+Built with ❤️ on top of music21. Thanks to the community around music and Python.

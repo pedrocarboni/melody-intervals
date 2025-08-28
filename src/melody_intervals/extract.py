@@ -7,8 +7,6 @@ from colorama import Fore, Style
 
 colorama.init()
 
-MINUS = "−"
-
 def _iter_note_pitches_midi(s):
     """
     Gather MIDI heights from real notes, excluding pauses.
@@ -54,7 +52,7 @@ def _qnum(name):
 def _directed_label(a, b) :
     if a == b:
         return "→"
-    sign = "+" if b > a else MINUS
+    sign = "+" if b > a else "-"
     iv = interval.Interval(pitch.Pitch(midi=a), pitch.Pitch(midi=b))  # Corrigido!
     return f"{sign}{_qnum(iv.name)}"
 
@@ -67,7 +65,7 @@ def _is_step(label):
     """Step = ±2M/±2m (ignores '→')."""
     if label == "→":
         return False
-    core = label[1:] if label and label[0] in {"+", MINUS} else label
+    core = label[1:] if label and label[0] in {"+", "-"} else label
     return core.startswith("2M") or core.startswith("2m")
 
 def _ambitus_name(midi_list):

@@ -61,7 +61,7 @@ def _contour(a, b):
 
 def extract_intervals(path):
     """
-    Carrega o arquivo e retorna:
+    Loads the file and returns:
       { 'sequence': [...], 'contour': [...], [ 'stats': {...} ] }
     """
     s = converter.parse(path)
@@ -80,9 +80,9 @@ def extract_intervals(path):
 
 def main():
     p = argparse.ArgumentParser(
-        description="Extrai perfil de intervalos dirigidos (+nQ/−nQ/→) e contorno (↑/↓/→) de MIDI/MusicXML."
+        description="Extracts directed interval profile (+nQ/−nQ/→) and contour (↑/↓/→) from MIDI/MusicXML."
     )
-    p.add_argument("input", help="Arquivo .mid/.midi/.musicxml/.xml")
+    p.add_argument("input", help="File: .mid/.midi/.musicxml/.xml")
     p.add_argument("--json", action="store_true", help="Enables output in JSON format")
     args = p.parse_args()
 

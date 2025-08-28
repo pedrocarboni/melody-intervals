@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse, json
+import argparse, json, sys
 from typing import List, Dict
 from music21 import converter, note as m21note, chord as m21chord, interval, pitch
 import colorama
@@ -110,6 +110,52 @@ def extract_intervals(path, with_stats):
         }
     return out
 
+def map_profile(contour: list[str]) -> str:
+    """
+    Generates a multiline ASCII graph connecting the melodic profile points.
+    Each step is drawn as / (up), \ (down), or _ (same).
+    The curve is continuous and visually accurate.
+    """
+    # Alturas acumuladas
+    y = 0
+    ys = [y]
+    for c in contour:
+        if c == "↑":
+            y += 1
+        elif c == "↓":
+            y -= 1
+        elif c == "→":
+            y += 0
+        else:
+            y += 0
+        ys.append(y)
+
+    miny, maxy = min(ys), max(ys)
+    H = maxy - miny + 1
+    W = len(contour)
+
+    # grade vazia
+    grid = [[' ' for _ in range(W)] for __ in range(H)]
+
+    # desenha cada passo
+    for i, c in enumerate(contour):
+        y0, y1 = ys[i], ys[i+1]
+        if c == "↑":
+            row = maxy - y1
+            grid[row][i] = "/"
+        elif c == "↓":
+            row = maxy - y0
+            grid[row][i] = "\\"
+        elif c == "→":
+            row = maxy - y0
+            grid[row][i] = "_"
+
+    # monta linhas (tirando espaços à direita)
+    lines = [''.join(row).rstrip() for row in grid]
+    return "\n".join(lines)
+
+
+
 def main():
     p = argparse.ArgumentParser(
         description="Extracts directed interval profile (+nQ/−nQ/→) and contour (↑/↓/→) from MIDI/MusicXML."
@@ -118,6 +164,7 @@ def main():
     p.add_argument("--json", action="store_true", help="Enables output in JSON format")
     p.add_argument("--stats", action="store_true", help="Enables stats (ambitus, steps/leaps, histogram)")
     p.add_argument("--out", type=str, help="Save output to file")
+    p.add_argument("--map", action="store_true", help="Shows ASCII map of the melodic profile")
     args = p.parse_args()
 
     res = extract_intervals(args.input, with_stats=args.stats)
@@ -155,6 +202,8 @@ def main():
             f.write(output)
     else:
         print(output)
+        if args.map:
+            print(f"\n{Fore.CYAN}Melodic map:{Style.RESET_ALL}\n{map_profile(res['contour'])}")
 
 if __name__ == "__main__":
     main()
